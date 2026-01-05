@@ -1,7 +1,8 @@
 `timescale 1ns / 1ps
 
 module alu(
-        input  logic [31:0] op1_i, op2_i,
+        input  logic [31:0] op1_i, 
+        input  logic [31:0] op2_i,
         input  logic [2:0]  alu_op_i,
         input  logic [4:0]  shamt_i,
         input  logic        shdir_i,
