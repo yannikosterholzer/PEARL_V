@@ -59,53 +59,44 @@ module hzu (
     // Match Detection Logic
     always_comb begin: MATCH_DETECTION
         // ID Stage Consumer vs Producers
-        match_rs1_id_ex  = (rs1_addr_id == rd_addr_ex)  && (rd_addr_ex != 5'd0)  && rd_we_ex;
-        match_rs2_id_ex  = (rs2_addr_id == rd_addr_ex)  && (rd_addr_ex != 5'd0)  && rd_we_ex;
-        match_rs1_id_mem = (rs1_addr_id == rd_addr_mem) && (rd_addr_mem != 5'd0) && rd_we_mem;
-        match_rs2_id_mem = (rs2_addr_id == rd_addr_mem) && (rd_addr_mem != 5'd0) && rd_we_mem;
-        match_rs1_id_wb  = (rs1_addr_id == rd_addr_wb)  && (rd_addr_wb != 5'd0)  && rd_we_wb;
-        match_rs2_id_wb  = (rs2_addr_id == rd_addr_wb)  && (rd_addr_wb != 5'd0)  && rd_we_wb;     
+        match_rs1_id_ex  = (rs1_addr_id  == rd_addr_ex)  && (rd_addr_ex  != 5'd0)  && rd_we_ex;
+        match_rs2_id_ex  = (rs2_addr_id  == rd_addr_ex)  && (rd_addr_ex  != 5'd0)  && rd_we_ex;
+        match_rs1_id_mem = (rs1_addr_id  == rd_addr_mem) && (rd_addr_mem != 5'd0)  && rd_we_mem;
+        match_rs2_id_mem = (rs2_addr_id  == rd_addr_mem) && (rd_addr_mem != 5'd0)  && rd_we_mem;
+        match_rs1_id_wb  = (rs1_addr_id  == rd_addr_wb)  && (rd_addr_wb  != 5'd0)  && rd_we_wb;
+        match_rs2_id_wb  = (rs2_addr_id  == rd_addr_wb)  && (rd_addr_wb  != 5'd0)  && rd_we_wb;     
         // EX Stage Consumer vs Producers
-        match_rs1_ex_mem = (rs1_addr_ex == rd_addr_mem) && (rd_addr_mem != 5'd0) && rd_we_mem;
-        match_rs2_ex_mem = (rs2_addr_ex == rd_addr_mem) && (rd_addr_mem != 5'd0) && rd_we_mem;
-        match_rs1_ex_wb  = (rs1_addr_ex == rd_addr_wb)  && (rd_addr_wb != 5'd0)  && rd_we_wb;
-        match_rs2_ex_wb  = (rs2_addr_ex == rd_addr_wb)  && (rd_addr_wb != 5'd0)  && rd_we_wb;
+        match_rs1_ex_mem = (rs1_addr_ex  == rd_addr_mem) && (rd_addr_mem != 5'd0) && rd_we_mem;
+        match_rs2_ex_mem = (rs2_addr_ex  == rd_addr_mem) && (rd_addr_mem != 5'd0) && rd_we_mem;
+        match_rs1_ex_wb  = (rs1_addr_ex  == rd_addr_wb)  && (rd_addr_wb  != 5'd0) && rd_we_wb;
+        match_rs2_ex_wb  = (rs2_addr_ex  == rd_addr_wb)  && (rd_addr_wb  != 5'd0) && rd_we_wb;
         // MEM Stage Consumer (Store) vs Producers
-        match_rs2_mem_wb = (rs2_addr_mem == rd_addr_wb) && (rd_addr_wb != 5'd0)  && rd_we_wb;
+        match_rs2_mem_wb = (rs2_addr_mem == rd_addr_wb) && (rd_addr_wb   != 5'd0) && rd_we_wb;
     end
 
     always_comb begin: HAZARD_CLASSIFICATION
         // Load-Use Hazards (for ALU-Operations)
         load_use_hazard_rs1 = match_rs1_id_ex && is_load_ex;
-        load_use_hazard_rs2 = match_rs2_id_ex && is_load_ex && !is_store_id;
-        
+        load_use_hazard_rs2 = match_rs2_id_ex && is_load_ex && !is_store_id;      
         // Load-Store Data Hazard: Store in ID needs rs2-Daten from Load
         // Case 1: Load in EX : Stall necessaary 
         load_store_data_hazard_ex = is_store_id && is_load_ex && (rs2_addr_id == rd_addr_ex) && (rd_addr_ex != 5'd0);
-        
         // Case 2: Load in MEM : Stall necessary
         load_store_data_hazard_mem = is_store_id && is_load_mem && (rs2_addr_id == rd_addr_mem) && (rd_addr_mem != 5'd0);
-        
         // Case 3: Load in WB : Stall necessary! 
         load_store_data_hazard_wb = is_store_id && (rs2_addr_id == rd_addr_wb) && (rd_addr_wb != 5'd0) && rd_we_wb;
-        
         // Combine all Load-Store Hazards 
         load_store_data_hazard = load_store_data_hazard_ex || load_store_data_hazard_mem || load_store_data_hazard_wb;
-        
         // Combine all Stall generating - Hazards 
         load_use_hazard = load_use_hazard_rs1 || load_use_hazard_rs2 || load_store_data_hazard;
-        
         // RAW Hazards from MEM (for Forwarding)
         raw_hazard_ex_rs1_from_mem = match_rs1_ex_mem && !is_load_mem;
         raw_hazard_ex_rs2_from_mem = match_rs2_ex_mem && !is_load_mem;
-        
         // RAW Hazards from WB (only if not yet from MEM)
         raw_hazard_ex_rs1_from_wb = match_rs1_ex_wb && !raw_hazard_ex_rs1_from_mem;
         raw_hazard_ex_rs2_from_wb = match_rs2_ex_wb && !raw_hazard_ex_rs2_from_mem;
-        
         // Store Hazard: Store in MEM neets Data from WB
         store_hazard = match_rs2_mem_wb && is_store_mem;
-        
         // Combined Flags
         any_raw_hazard_ex   = raw_hazard_ex_rs1_from_mem || raw_hazard_ex_rs2_from_mem || raw_hazard_ex_rs1_from_wb  || raw_hazard_ex_rs2_from_wb;
         any_hazard_detected = load_use_hazard || any_raw_hazard_ex || store_hazard;
@@ -116,7 +107,6 @@ module hzu (
         flush_if_id = tk_brnch_ex;
         flush_id_ex = tk_brnch_ex || load_use_hazard;
     end
-
 
     // Generate Control Signals for Forwarding
     always_comb begin: GEN_FORWARD_A 
