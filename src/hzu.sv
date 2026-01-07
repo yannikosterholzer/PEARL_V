@@ -79,7 +79,7 @@ module hzu (
         load_use_hazard_rs1 = match_rs1_id_ex && is_load_ex;
         load_use_hazard_rs2 = match_rs2_id_ex && is_load_ex && !is_store_id;      
         // Load-Store Data Hazard: Store in ID needs rs2-Daten from Load
-        // Case 1: Load in EX : Stall necessaary 
+        // Case 1: Load in EX : Stall necessary 
         load_store_data_hazard_ex = is_store_id && is_load_ex && (rs2_addr_id == rd_addr_ex) && (rd_addr_ex != 5'd0);
         // Case 2: Load in MEM : Stall necessary
         load_store_data_hazard_mem = is_store_id && is_load_mem && (rs2_addr_id == rd_addr_mem) && (rd_addr_mem != 5'd0);
