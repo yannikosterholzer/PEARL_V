@@ -95,7 +95,7 @@ module hzu (
         // RAW Hazards from WB (only if not yet from MEM)
         raw_hazard_ex_rs1_from_wb = match_rs1_ex_wb && !raw_hazard_ex_rs1_from_mem;
         raw_hazard_ex_rs2_from_wb = match_rs2_ex_wb && !raw_hazard_ex_rs2_from_mem;
-        // Store Hazard: Store in MEM neets Data from WB
+        // Store Hazard: Store in MEM needs Data from WB
         store_hazard = match_rs2_mem_wb && is_store_mem;
         // Combined Flags
         any_raw_hazard_ex   = raw_hazard_ex_rs1_from_mem || raw_hazard_ex_rs2_from_mem || raw_hazard_ex_rs1_from_wb  || raw_hazard_ex_rs2_from_wb;
