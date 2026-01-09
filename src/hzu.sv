@@ -71,7 +71,7 @@ module hzu // Hazard and Forwarding Unit
     typedef enum logic [1:0] {
         FWD_STORE_NORMAL = 2'b00,
         FWD_STORE_WB     = 2'b01
-    } forward_store_t;
+    } forward_store_t; // one bit Signal would be enough -> to be fixed in the future
 
     function automatic logic detect_reg_dependency(
         input logic [4:0] consumer_rs,
