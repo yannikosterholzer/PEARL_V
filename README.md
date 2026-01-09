@@ -1,6 +1,6 @@
 # PEARL-V 🐾
 
-PEARL-V is a modular implementation of the **RV32I** ISA in System Verilog by Yannik Osterholzer.  
+PEARL-V is a modular implementation of the **RV32I** ISA in System Verilog.  
 I developed this design for my Master’s in Integrated Systems at CUAS. 
 My goal was to build a pipelined RISC-V processor with a focus on clarity, using a modular and well-structured SystemVerilog coding style.
 
