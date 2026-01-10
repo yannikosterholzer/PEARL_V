@@ -36,7 +36,7 @@ Some of the works that helped shape the design:
 
 * **Bruno Levy:** *"From Blinker to RISC-V"*.
 * **Harris & Harris:** *"Digital Design and Computer Architecture (RISC-V Edition)"*.
-* **Li-Wen Li (TinyRISCV):** Inspiration for the CSR interface.
+* **Li-Wen Li (TinyRISCV) and AngeloJacobo:** Inspiration for the CSR interface.
 
 ---
 
