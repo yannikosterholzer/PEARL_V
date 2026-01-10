@@ -31,7 +31,7 @@ module csr (
     logic [31:0] mepc;       // Machine Exception PC
     logic [31:0] mcause;     // Machine Cause
 
-    // Hardcoded Trap Vector (temporary workaround to achieve minimal working state)
+    // Hardcoded Trap Vector (temporary(!) workaround to achieve minimal working state)
     localparam logic [31:0] MTVEC_DEFAULT = 32'hFFFFFF00;
 
     //outputs
