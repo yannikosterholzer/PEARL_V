@@ -86,10 +86,10 @@ module hzu_tb;
 		#5;
 
     // load-use hazards
-		/*
-		When a load in EX writes to a register that the instruction in ID needs, we must stall one cycle since the load data isn't available until MEM completes. 
-		We test this for rs1, rs2, and both store address and store data dependencies.
-		*/
+	/*
+	When a load in EX writes to a register that the instruction in ID needs, we must stall one cycle since the load data isn't available until MEM completes. 
+	We test this for rs1, rs2, and both store address and store data dependencies.
+	*/
     clear_sigs(); 
 		rd_addr_ex  = 10; 
 		rd_we_ex    = 1; 
@@ -124,11 +124,11 @@ module hzu_tb;
 		#1;
     check("load-use store addr", stall);
 		
-		//Forwarding
-		/*
-		ALU results can be forwarded from MEM or WB to avoid stalls. 
-		We verify both paths work for rs1 and rs2, and that MEM takes priority when both stages have the value, because the MEM-value is newer.
-		*/
+	//Forwarding
+	/*
+	ALU results can be forwarded from MEM or WB to avoid stalls. 
+	We verify both paths work for rs1 and rs2, and that MEM takes priority when both stages have the value, because the MEM-value is newer.
+	*/
     
     // forwarding mem->ex
     clear_sigs(); 
@@ -171,9 +171,9 @@ module hzu_tb;
     check("fwd priority mem > wb", forward_a_sel == FWD_MEM);
 
     // no forwarding from load in mem 
-		/*
-		Unlike ALU results, load data in MEM isn't ready yet - it still needs to be fetched from memory -> therefore the HZU must not forward from a load in MEM.
-		*/
+	/*
+	Unlike ALU results, load data in MEM isn't ready yet - it still needs to be fetched from memory -> therefore the HZU must not forward from a load in MEM.
+	*/
     clear_sigs(); 
 		rd_addr_mem = 5; 
 		rd_we_mem   = 1; 
@@ -183,10 +183,10 @@ module hzu_tb;
     check("no fwd from load in mem", forward_a_sel == FWD_REG);
 
     // store-data forwarding
-		/*
-		Stores need their data in MEM stage, so we can forward from WB. 
-		We also test the conservative stalls for store-data hazards from earlier pipeline stages.
-		*/
+	/*
+	Stores need their data in MEM stage, so we can forward from WB. 
+	We also test the conservative stalls for store-data hazards from earlier pipeline stages.
+	*/
     clear_sigs(); 
 		rd_addr_wb   = 15; 
 		rd_we_wb     = 1; 
@@ -214,9 +214,9 @@ module hzu_tb;
     check("store-data from wb (conservative)", stall);
 
     // branch flush
-		/*	
-		When a branch is taken, IF and ID contain wrong instructions and must be flushed.
-		*/
+	/*	
+	When a branch is taken, IF and ID contain wrong instructions and must be flushed.
+	*/
     clear_sigs(); 
 		tk_brnch_ex = 1; 
 		#1;
