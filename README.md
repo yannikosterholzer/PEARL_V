@@ -49,4 +49,4 @@ Some of the works that helped shape the design:
 * **Documentation:** Documentation is ongoing. 
 ---
 
-> *PEARL-V is named in loving memory of Pearl, a small but spirited dachshund. Much like its namesake, this core aims to be compact and loyal.* 🐾
+> *PEARL-V is named in loving memory of Pearl, a small but spirited dachshund. Much like its namesake, this core aims to be tiny and loyal.* 🐾
