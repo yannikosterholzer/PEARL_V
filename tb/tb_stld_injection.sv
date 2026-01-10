@@ -19,7 +19,10 @@ module tb_stld_injection;
     logic [31:0] got[20], want[20];
     int idx = 0;
 
-    initial begin clk = 0; forever #5 clk = ~clk; end
+    initial begin 
+		clk = 0; 
+		forever #5 clk = ~clk; 
+	end
 
     core dut (
         .clk(clk), 
