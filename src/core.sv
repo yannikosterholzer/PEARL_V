@@ -10,7 +10,7 @@ module core (
     output logic        dmem_re_o,        
     output logic [31:0] dmem_wdata_o,     
     output logic [3:0]  dmem_wmask_o,     
-    input  logic [31:0] dmem_rdata_i      
+    input  logic [31:0] dmem_rdata_i   // Attention: Read-Request in MEM, but Data will be available in WB one cycle later!   
 );
 
     // Pipeline Control Signals
