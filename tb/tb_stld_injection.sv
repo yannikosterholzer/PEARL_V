@@ -2,10 +2,9 @@
 
 module tb_stld_injection;
 
-
   	/*
 	  This testbench validates the core by directly injecting Store and Load instructionss into the instruction memory bus.	
-	  */
+	*/
 
     logic clk, arstn;
     logic [31:0] imem_addr, imem_data;
