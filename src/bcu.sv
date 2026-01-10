@@ -1,6 +1,7 @@
 `timescale 1ns / 1ps
 
-module bcu(
+module bcu // Branch Compare Unit
+    (
     input  logic [31:0] rs1_i,
     input  logic [31:0] rs2_i,
     input  logic [2:0]  bcu_op_i,
