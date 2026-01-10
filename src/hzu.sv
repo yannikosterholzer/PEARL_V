@@ -50,9 +50,10 @@ module hzu // Hazard and Forwarding Unit
     logic hazard_load_use_rs1;
     logic hazard_load_use_rs2;
     // Store-Data Hazards:  Store in ID needs rs2 as store-data from producer in pipeline
-    logic hazard_store_data_ex;    // Producer is Load in EX
-    logic hazard_store_data_mem;   // Producer is Load in MEM
-    logic hazard_store_data_wb;    // Producer in WB (currently conservative stall, not the most efficient solution -> to be improved in future revisions)
+    logic hazard_store_data_ex;    // * Producer is Load in EX 
+    logic hazard_store_data_mem;   // * Producer is Load in MEM
+    logic hazard_store_data_wb;    // * Producer in WB (currently conservative stall, not the most efficient solution -> to be improved in future revisions)
+    // * all 3 Signals can maybe be ommitted because of hazard_fwd_store_wb -> check later
     // Forwardable RAW Hazards: Consumer can get data via forwarding (no stall needed!)
     logic hazard_fwd_rs1_mem;      // Forward from MEM to EX.rs1
     logic hazard_fwd_rs2_mem;      // Forward from MEM to EX.rs2
