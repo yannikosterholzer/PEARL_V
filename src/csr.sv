@@ -6,7 +6,7 @@ module csr (
     input  logic        trap_i,           
     input  logic [31:0] trap_pc_i,        
     input  logic [3:0]  trap_cause_i,     // Trap-cause (3=EBREAK, 11=ECALL)
-    input  logic        mret_i,           
+    input  logic        mret_i,           // not yet used according to the specification (RISC-V Privileged Spec)
     input  logic [11:0] csr_addr_i,       
     input  logic [31:0] csr_wdata_i,      
     input  logic        csr_we_i,         
@@ -16,6 +16,7 @@ module csr (
 );
 
     // CSR Addrs (RISC-V Privileged Spec)
+    // RISC-V Privileged Specification, Version 20250508: Table @ Page 18
     localparam logic [11:0] CSR_MSTATUS = 12'h300;
     localparam logic [11:0] CSR_MTVEC   = 12'h305;
     localparam logic [11:0] CSR_MEPC    = 12'h341;
@@ -35,7 +36,7 @@ module csr (
     localparam logic [31:0] MTVEC_DEFAULT = 32'hFFFFFF00;
 
     //outputs
-    assign mtvec_o = mtvec;
+    assign mtvec_o = mtvec; // RISC-V Privileged Spec @ Page 39
     assign mepc_o  = mepc;
 
     always_ff @(posedge clk or negedge rstn) begin: WRITE_CSR
@@ -53,6 +54,12 @@ module csr (
             else
                 mepc <= trap_pc_i;
             mcause <= {28'h0, trap_cause_i};
+            /* RISC-V Privileged Spec @ Page 47
+            The mcause register is an MXLEN-bit read-write register formatted as shown in Figure 22. When a trap
+            is taken into M-mode, mcause is written with a code indicating the event that caused the trap.
+            Otherwise, mcause is never written by the implementation, though it may be explicitly written by
+            software.
+            */
         end else if (csr_we_i) begin
            // CSR Write (for future updates)
             case (csr_addr_i)
