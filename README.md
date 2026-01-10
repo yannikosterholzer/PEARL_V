@@ -46,6 +46,7 @@ Some of the works that helped shape the design:
 * **Interrupts:** Currently only synchronous traps are supported, but external interrupts are planned.
 * **Branch Prediction:** Future extension with a simple prediction unit to reduce branch penalties.
 * **Performance Counters:** Future implementation of basic hardware counters (e.g., cycle and instruction retired counters) to enable benchmarking and performance analysis.
+* * **Documentation:** Documentation is ongoing. 
 ---
 
 > *PEARL-V is named in loving memory of Pearl, a small but spirited dachshund. Much like its namesake, this core aims to be compact and loyal.* 🐾
