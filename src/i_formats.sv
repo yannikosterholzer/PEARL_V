@@ -1,5 +1,15 @@
 package i_formats;
 
+
+     /* 
+     Encapsulated via 'Divide & Conquer' to decouple bitwizardy from the Decoder-Implementation,
+     therefore making the Decoder (ID) more readable.
+     + Uses packed structs for type-safety.
+
+     will perhaps outsource further functions to this package in the future for improved readability.
+     */
+
+    
     localparam logic [6:0] RV32I_R_OP   = 7'b0110011;  // R-Type ALU
     localparam logic [6:0] RV32I_LOAD   = 7'b0000011;  // I-Type Load
     localparam logic [6:0] RV32I_IALU   = 7'b0010011;  // I-Type ALU imm
