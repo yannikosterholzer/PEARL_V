@@ -3,9 +3,7 @@
 module tb_core_direct_injection;
 
 	/*
-	
 	This testbench validates the core by directly injecting instruction opcodes into the instruction memory bus, bypassing the need for a full software binary.
-	
 	*/
 
     logic clk, arstn;
