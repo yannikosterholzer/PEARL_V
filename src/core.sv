@@ -73,7 +73,9 @@ module core (
     // EX Stage Signals
     logic [31:0] alu_result_ex;                   
     logic [31:0] op1_ex_forwarded;                
-    logic [31:0] op2_ex_forwarded;                
+    logic [31:0] op2_ex_forwarded; 
+    logic [31:0] rs1_ex_forwarded;
+    logic [31:0] rs2_ex_forwarded;
         
     // EX/MEM Pipeline Register Outputs
     logic [31:0] pc_mem;                          
