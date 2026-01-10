@@ -54,7 +54,7 @@ module csr (
                 mepc <= trap_pc_i;
             mcause <= {28'h0, trap_cause_i};
         end else if (csr_we_i) begin
-          // CSR Write (for future updates)
+           // CSR Write (for future updates)
             case (csr_addr_i)
                 CSR_MSTATUS: mstatus <= csr_wdata_i;
                 CSR_MTVEC:   mtvec   <= csr_wdata_i;
