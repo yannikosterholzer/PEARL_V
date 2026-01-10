@@ -20,7 +20,7 @@ module alu(
             3'b100 : alu_o = (op1_i ^ op2_i);   
             3'b101 : begin
                         if (shdir_i) 
-                            alu_o = $unsigned($signed(op1_i) >>> shamt_i); // using only $signed(op1_i) >>> shamt_i) -> nasty bugs will appear
+                            alu_o = $unsigned($signed(op1_i) >>> shamt_i); // $unsigned is necessary!!! when using only $signed(op1_i) >>> shamt_i) -> nasty bugs will appear
                         else         
                             alu_o = op1_i >> shamt_i;
                      end     
