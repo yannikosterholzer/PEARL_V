@@ -269,6 +269,23 @@ module core (
         end
     end
 
+    
+    always_comb begin
+        case (forward_a_sel)
+            2'b01:   rs1_ex_forwarded = alu_result_mem;
+            2'b10:   rs1_ex_forwarded = rd_data_wb;
+            default: rs1_ex_forwarded = rs1_data_ex;
+        endcase
+    end
+    
+    always_comb begin
+        case (forward_b_sel)
+            2'b01:   rs2_ex_forwarded = alu_result_mem;
+            2'b10:   rs2_ex_forwarded = rd_data_wb;
+            default: rs2_ex_forwarded = rs2_data_ex;
+        endcase
+    end
+
     EX u_ex (
         .ex_op_i    (ex_op_ex),
         .isBRNCH_i  (isBRNCH_ex),
@@ -279,8 +296,8 @@ module core (
         .shamt_i    (shamt_ex),
         .shdir_i    (shdir_ex),
         .sbtr_i     (sbtr_ex),
-        .rs1_i      (rs1_data_ex),
-        .rs2_i      (rs2_data_ex),
+        .rs1_i      (rs1_ex_forwarded),
+        .rs2_i      (rs2_ex_forwarded),
         .imm_i      (imm_ex),
         .pc_i       (pc_ex),
         .tk_brnch_o (tk_brnch_ex),
