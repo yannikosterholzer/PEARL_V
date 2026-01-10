@@ -269,7 +269,7 @@ module core (
         end
     end
 
-    EX_u u_ex (
+    EX u_ex (
         .ex_op_i    (ex_op_ex),
         .isBRNCH_i  (isBRNCH_ex),
         .isJAL_i    (isJAL_ex),
