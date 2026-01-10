@@ -46,10 +46,10 @@ module csr (
             mcause  <= 32'h0;
         end else if (trap_i) begin
             // @ Trap: save PC and Cause speichern
-          // ECALL: mepc = pc + 4 (ret to next instr.)
-          // EBREAK: mepc = pc (ret to same instr.)
+            // ECALL: mepc = pc + 4 (ret to next instr.)
+            // EBREAK: mepc = pc (ret to same instr.)
             if (trap_cause_i == CAUSE_ECALL_M)
-                mepc <= trap_pc_i + 32'd4;
+                mepc <= trap_pc_i + 32'd4; // simplified -> does not correspond to the specification, correct in future revisions
             else
                 mepc <= trap_pc_i;
             mcause <= {28'h0, trap_cause_i};
