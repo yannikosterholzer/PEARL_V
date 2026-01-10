@@ -55,10 +55,10 @@ module csr (
                 mepc <= trap_pc_i;
             mcause <= {28'h0, trap_cause_i};
             /* RISC-V Privileged Spec @ Page 47
-            The mcause register is an MXLEN-bit read-write register formatted as shown in Figure 22. When a trap
+            "The mcause register is an MXLEN-bit read-write register formatted as shown in Figure 22. When a trap
             is taken into M-mode, mcause is written with a code indicating the event that caused the trap.
             Otherwise, mcause is never written by the implementation, though it may be explicitly written by
-            software.
+            software."
             */
         end else if (csr_we_i) begin
            // CSR Write (for future updates)
